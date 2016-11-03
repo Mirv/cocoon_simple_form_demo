@@ -11,4 +11,9 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :owner, :reject_if => :all_blank
   accepts_nested_attributes_for :tags
   accepts_nested_attributes_for :project_tags, :allow_destroy => true
+  
+scope :not_belonging_to, lambda {|developer| where('id NOT IN (?)', developer.projects.empty? ? '' : developer.projects.ids) }
+
+
+
 end
